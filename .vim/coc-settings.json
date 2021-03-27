@@ -1,0 +1,3 @@
+{
+  "clangd.arguments": ["-query-driver", "/home/potewo/.platformio/packages/toolchain-atmelavr/bin/avr-g++"]
+}
