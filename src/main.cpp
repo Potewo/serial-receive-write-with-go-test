@@ -35,7 +35,7 @@ void loop() {
     Serial.print('R');
     while (1) {
       if (Serial.available()) {
-        ledStatus = Serial.read() - '0';
+        ledStatus = Serial.read();
         break;
       }
     }
