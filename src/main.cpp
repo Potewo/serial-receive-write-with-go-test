@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include "AwesomeSerial.h"
 
 uint8_t ledArray[] = {2, 3, 4, 5, 6, 7, 8, 9};
 
@@ -9,7 +10,7 @@ void setup() {
   Serial.begin(9600);
 }
 
-uint8_t ledStatus;
+uint8_t ledStatus[8];
 
 void showLed(uint8_t);
 
@@ -31,16 +32,28 @@ void loop() {
 
   // Arduino: Receive, PC: send
   if (key == 'S') {
-    // Send O (means OK)
-    Serial.print('R');
+    int N;
     while (1) {
-      if (Serial.available()) {
-        ledStatus = Serial.read();
+      if (Serial.available() == 1) {
+        N = Serial.read();
+        break;
+      }
+    }
+    // Send O (means OK)
+    Serial.print('O');
+    while (1) {
+      if (Serial.available() == N) {
+        for (int i = 0; i < N; i++) {
+          ledStatus[i] = Serial.read();
+        }
         break;
       }
     }
     Serial.print('O');
-    showLed(ledStatus);
+    for (int i = 0; i < N; i++) {
+      showLed(ledStatus[i]);
+      delay(500);
+    }
   }
 }
 
